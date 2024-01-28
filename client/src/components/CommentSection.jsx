@@ -43,8 +43,24 @@ const CommentSection = ({ postId }) => {
     }
   };
 
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const res = await fetch(`/api/comment/getPostComments/${postId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getComments();
+  }, [postId]);
+
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
+      
       {currentUser ? (
         <div className="flex items-center gap-1 my-5 text-gray-500 text-sm">
           <p>Signed in as:</p>
@@ -68,6 +84,7 @@ const CommentSection = ({ postId }) => {
           </Link>
         </div>
       )}
+
       {currentUser && (
         <form
           onSubmit={handleSubmit}
@@ -95,6 +112,7 @@ const CommentSection = ({ postId }) => {
           )}
         </form>
       )}
+
       {comments.length === 0 ? (
         <p className="text-sm my-5">No comments yet!</p>
       ) : (
@@ -119,6 +137,7 @@ const CommentSection = ({ postId }) => {
           ))}
         </>
       )}
+
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
