@@ -1,0 +1,5 @@
+MONGO='mongodb+srv://karthiknadar1204:HkUXxFhW5JNpIspI@cluster0.as2dhhb.mongodb.net/QuillQuest?retryWrites=true&w=majority'
+
+JWT_SECRET='o8fo83rfo874nfrfn'
+
+VITE_FIREBASE_API_KEY='AIzaSyB7KMfVCuX6IDyaoGXSQchTTsAqbFjlUmY'
