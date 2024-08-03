@@ -3,10 +3,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import { set } from 'mongoose';
 
 export default function DashPosts() {
-  
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setUserPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
@@ -16,7 +14,8 @@ export default function DashPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const userIdParam = currentUser.isAdmin ? '' : `userId=${currentUser._id}`;
+        const res = await fetch(`/api/post/getposts?${userIdParam}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -28,17 +27,14 @@ export default function DashPosts() {
         console.log(error.message);
       }
     };
-    if (currentUser.isAdmin) {
-      fetchPosts();
-    }
-  }, [currentUser._id]);
+    fetchPosts();
+  }, [currentUser._id, currentUser.isAdmin]);
 
   const handleShowMore = async () => {
     const startIndex = userPosts.length;
     try {
-      const res = await fetch(
-        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`
-      );
+      const userIdParam = currentUser.isAdmin ? '' : `userId=${currentUser._id}&startIndex=${startIndex}`;
+      const res = await fetch(`/api/post/getposts?${userIdParam}`);
       const data = await res.json();
       if (res.ok) {
         setUserPosts((prev) => [...prev, ...data.posts]);
@@ -75,7 +71,7 @@ export default function DashPosts() {
 
   return (
     <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
-      {currentUser.isAdmin && userPosts.length > 0 ? (
+      {userPosts.length > 0 ? (
         <>
           <Table hoverable className='shadow-md'>
             <Table.Head>
@@ -83,13 +79,15 @@ export default function DashPosts() {
               <Table.HeadCell>Post image</Table.HeadCell>
               <Table.HeadCell>Post title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-              <Table.HeadCell>
-                <span>Edit</span>
-              </Table.HeadCell>
+              {currentUser.isAdmin && (
+                <>
+                  <Table.HeadCell>Delete</Table.HeadCell>
+                  <Table.HeadCell>Edit</Table.HeadCell>
+                </>
+              )}
             </Table.Head>
             {userPosts.map((post) => (
-              <Table.Body className='divide-y'>
+              <Table.Body key={post._id} className='divide-y'>
                 <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                   <Table.Cell>
                     {new Date(post.updatedAt).toLocaleDateString()}
@@ -112,25 +110,33 @@ export default function DashPosts() {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
-                  <Table.Cell>
-                    <span
-                      onClick={() => {
-                        setShowModal(true);
-                        setPostIdToDelete(post._id);
-                      }}
-                      className='font-medium text-red-500 hover:underline cursor-pointer'
-                    >
-                      Delete
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Link
-                      className='text-teal-500 hover:underline'
-                      to={`/update-post/${post._id}`}
-                    >
-                      <span>Edit</span>
-                    </Link>
-                  </Table.Cell>
+                  {currentUser.isAdmin || post.userId === currentUser._id ? (
+                    <>
+                      {currentUser.isAdmin && (
+                        <Table.Cell>
+                          <span
+                            onClick={() => {
+                              setShowModal(true);
+                              setPostIdToDelete(post._id);
+                            }}
+                            className='font-medium text-red-500 hover:underline cursor-pointer'
+                          >
+                            Delete
+                          </span>
+                        </Table.Cell>
+                      )}
+                      {currentUser.isAdmin || post.userId === currentUser._id ? (
+                        <Table.Cell>
+                          <Link
+                            className='text-teal-500 hover:underline'
+                            to={`/update-post/${post._id}`}
+                          >
+                            Edit
+                          </Link>
+                        </Table.Cell>
+                      ) : null}
+                    </>
+                  ) : null}
                 </Table.Row>
               </Table.Body>
             ))}

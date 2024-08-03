@@ -9,7 +9,7 @@ import { app } from "../firebase";
 import {
   updateStart,
   updateSuccess,
-  updateFailure,
+  updateFailure, 
   deleteUserStart,
   deleteUserSuccess,
   deleteUserFailure,
@@ -237,17 +237,16 @@ const DashProfile = () => {
         >
           {loading ? "Loading..." : "Update"}
         </Button>
-        {currentUser.isAdmin && (
-          <Link to={"/create-post"}>
+        
+          <Link to={"/create-post"}> 
             <Button
               type="button"
               gradientDuoTone="purpleToPink"
               className="w-full"
             >
-              Create a post
+              Create a post 
             </Button>
           </Link>
-        )}
       </form>
 
       <div className="text-red-500 flex justify-between mt-5">
