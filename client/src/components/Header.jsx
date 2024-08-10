@@ -17,7 +17,7 @@ const Header = () => {
     <Navbar className='border-b-2'>
       <Link
         to='/'
-        className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
+        className='self-center whitespace-nowrap text-3xl sm:text-2xl font-semibold dark:text-white architects-daughter'
       >
         <span className='px-2 py-1 rounded-lg text-white'>
           QuillQuest
@@ -27,14 +27,6 @@ const Header = () => {
         <AiOutlineSearch />
       </Button>
       <div className='flex gap-2 md:order-2'>
-        <Button
-          className='w-12 h-10 hidden sm:inline'
-          color='gray'
-          pill
-          onClick={() => dispatch(toggleTheme())}
-        >
-          {theme === 'light' ? <FaSun /> : <FaMoon />}
-        </Button>
         {currentUser ? (
           <Dropdown
             arrowIcon={false}
@@ -53,9 +45,6 @@ const Header = () => {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item
-            // onClick={handleSignout}
-            >Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to='/sign-in'>
@@ -67,14 +56,11 @@ const Header = () => {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link active={path === '/'} as={'div'} className='text-lg mx-4'>
+        <Navbar.Link active={path === '/'} as={'div'} className='text-xl mx-4 architects-daughter'>
           <Link to='/'>Home</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === '/about'} as={'div'} className='text-lg mx-4'>
-          <Link to='/about'>About</Link>
-        </Navbar.Link>
-        <Navbar.Link active={path === '/projects'} as={'div'} className='text-lg mx-4'>
-          <Link to='/projects'>Projects</Link>
+        <Navbar.Link active={path === '/projects'} as={'div'} className='text-xl mx-4 architects-daughter'>
+          <Link to='/search'>Blogs</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

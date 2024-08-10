@@ -120,7 +120,7 @@ export default function Home() {
               className="p-8 mb-8 md:mb-0 text-2xl w-full sm:w-fit border-t-2 rounded-full border-[#4D4D4D] bg-[#1F1F1F] hover:bg-white group transition-all flex items-center justify-center gap-4 hover:shadow-xl hover:shadow-neutral-500 duration-500"
             >
               <Link to='/create-post' >
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600 md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black goup-hover:to-black">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600 md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-black architects-daughter">
                   Start Your Blogging Journey
                 </span>
               </Link>
@@ -134,7 +134,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7 relative z-10">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-4xl font-semibold text-center mt-[-4rem]">Recent Posts</h2>
+            <h2 className="text-4xl font-semibold text-center mt-[-4rem] architects-daughter">Recent Posts</h2>
             <div className="flex flex-wrap gap-4">
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
