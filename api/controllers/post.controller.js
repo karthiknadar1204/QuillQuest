@@ -72,39 +72,53 @@ export const create = async (req, res, next) => {
     }
   };
 
-
   export const deletepost = async (req, res, next) => {
-    if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-      return next(errorHandler(403, 'You are not allowed to delete this post'));
-    }
-    try {
-      await Post.findByIdAndDelete(req.params.postId);
-      res.status(200).json('The post has been deleted');
-    } catch (error) {
-      next(error);
-    }
-  };
+    const { postId, userId } = req.params;
+    console.log("post id and userid:", postId, userId);
+    console.log("req.user.id:", req.user.id);
 
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return next(errorHandler(404, 'Post not found'));
+        }
+
+        if (req.user.isAdmin || req.user.id === post.userId.toString()) {
+            await Post.findByIdAndDelete(postId);
+            res.status(200).json('The post has been deleted');
+        } else {
+            return next(errorHandler(403, 'You are not allowed to delete this post'));
+        }
+    } catch (error) {
+        next(error);
+    }
+};
 
   export const updatepost = async (req, res, next) => {
-    if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-      return next(errorHandler(403, 'You are not allowed to update this post'));
-    }
     try {
-      const updatedPost = await Post.findByIdAndUpdate(
-        req.params.postId,
-        {
-          $set: {
-            title: req.body.title,
-            content: req.body.content,
-            category: req.body.category,
-            image: req.body.image,
-          },
-        },
-        { new: true }
-      );
-      res.status(200).json(updatedPost);
+        const post = await Post.findById(req.params.postId);
+        if (!post) {
+            return next(errorHandler(404, 'Post not found'));
+        }
+
+        if (req.user.isAdmin || req.user.id === post.userId.toString()) {
+            const updatedPost = await Post.findByIdAndUpdate(
+                req.params.postId,
+                {
+                    $set: {
+                        title: req.body.title,
+                        content: req.body.content,
+                        category: req.body.category,
+                        image: req.body.image,
+                    },
+                },
+                { new: true }
+            );
+            res.status(200).json(updatedPost);
+        } else {
+            return next(errorHandler(403, 'You are not allowed to update this post'));
+        }
     } catch (error) {
-      next(error);
+        next(error);
     }
-  };
+};

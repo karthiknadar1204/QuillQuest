@@ -98,7 +98,6 @@ export default function Home() {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Meteor Shower Background */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         {Array.from({ length: 100 }).map((_, i) => (
           <div

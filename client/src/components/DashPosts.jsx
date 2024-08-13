@@ -46,7 +46,7 @@ export default function DashPosts() {
       console.log(error.message);
     }
   };
-
+ 
   const handleDeletePost = async () => {
     setShowModal(false);
     try {

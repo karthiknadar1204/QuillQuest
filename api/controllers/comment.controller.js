@@ -50,7 +50,7 @@ export const getPostComments = async (req, res, next) => {
       if (userIndex === -1) {
         comment.numberOfLikes += 1;
         comment.likes.push(req.user.id);
-      } else {
+      } else { 
         comment.numberOfLikes -= 1;
         comment.likes.splice(userIndex, 1);
       }
