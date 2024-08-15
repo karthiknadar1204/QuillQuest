@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import postRouter from './routes/post.route.js';
 import commentRouter from './routes/comment.route.js';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 dotenv.config()
 
@@ -18,6 +19,8 @@ mongoose.connect(process.env.MONGO).then(
     })
 
 const app=express();
+
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(cookieParser());
