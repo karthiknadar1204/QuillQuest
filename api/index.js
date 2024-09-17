@@ -20,7 +20,10 @@ mongoose.connect(process.env.MONGO).then(
 
 const app=express();
 
-app.use(cors())
+app.use(cors({
+    credentials: true,
+    origin: process.env.FRONTEND_URL
+}))
 
 app.use(bodyParser.json());
 app.use(cookieParser());
