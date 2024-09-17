@@ -13,7 +13,7 @@ export default function DashComments() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getcomments`);
+        const res = await fetch(import.meta.env.VITE_BACKEND+`/api/comment/getcomments`);
         const data = await res.json();
         if (res.ok) {
           setComments(data.comments);
@@ -33,9 +33,7 @@ export default function DashComments() {
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
-      const res = await fetch(
-        `/api/comment/getcomments?startIndex=${startIndex}`
-      );
+      const res = await fetch(import.meta.env.VITE_BACKEND+`/api/comment/getcomments?startIndex=${startIndex}`);
       const data = await res.json();
       if (res.ok) {
         setComments((prev) => [...prev, ...data.comments]);
@@ -52,7 +50,7 @@ export default function DashComments() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/comment/deleteComment/${commentIdToDelete}`,
+        import.meta.env.VITE_BACKEND+`/api/comment/deleteComment/${commentIdToDelete}`,
         {
           method: 'DELETE',
         }

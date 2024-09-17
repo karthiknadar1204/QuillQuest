@@ -61,11 +61,14 @@ export default function CreatePost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await fetch('/api/post/create', {
+      const res = await fetch(import.meta.env.VITE_BACKEND+'/api/post/create', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          
         },
         body: JSON.stringify(formData),
       });

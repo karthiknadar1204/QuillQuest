@@ -15,7 +15,7 @@ export default function DashPosts() {
     const fetchPosts = async () => {
       try {
         const userIdParam = currentUser.isAdmin ? '' : `userId=${currentUser._id}`;
-        const res = await fetch(`/api/post/getposts?${userIdParam}`);
+        const res = await fetch(import.meta.env.VITE_BACKEND+`/api/post/getposts?${userIdParam}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -34,7 +34,7 @@ export default function DashPosts() {
     const startIndex = userPosts.length;
     try {
       const userIdParam = currentUser.isAdmin ? '' : `userId=${currentUser._id}&startIndex=${startIndex}`;
-      const res = await fetch(`/api/post/getposts?${userIdParam}`);
+      const res = await fetch(import.meta.env.VITE_BACKEND+`/api/post/getposts?${userIdParam}`);
       const data = await res.json();
       if (res.ok) {
         setUserPosts((prev) => [...prev, ...data.posts]);
@@ -51,7 +51,7 @@ export default function DashPosts() {
     setShowModal(false);
     try {
       const res = await fetch(
-        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+        import.meta.env.VITE_BACKEND+`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: 'DELETE',
           
