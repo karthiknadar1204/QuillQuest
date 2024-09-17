@@ -101,7 +101,7 @@ const DashProfile = () => {
     }
     try {
       dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(import.meta.env.VITE_BACKEND+`/api/user/update/${currentUser._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const DashProfile = () => {
     setShowModal(false);
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(import.meta.env.VITE_BACKEND+`/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
       });
       const data = await res.json();

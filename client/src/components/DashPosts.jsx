@@ -54,6 +54,7 @@ export default function DashPosts() {
         `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: 'DELETE',
+          
         }
       );
       const data = await res.json();

@@ -13,7 +13,7 @@ export default function DashUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`/api/user/getusers`);
+        const res = await fetch(import.meta.env.VITE_BACKEND+`/api/user/getusers`);
         const data = await res.json();
         if (res.ok) {
           setUsers(data.users);
@@ -50,7 +50,7 @@ export default function DashUsers() {
 
   const handleDeleteUser = async () => {
     try {
-        const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
+        const res = await fetch(import.meta.env.VITE_BACKEND+`/api/user/delete/${userIdToDelete}`, {
             method: 'DELETE',
         });
         const data = await res.json();
