@@ -14,6 +14,7 @@
     "firebase": "^10.7.2",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^11.3.21",
+    "moment": "^2.30.1",
     "persist": "^0.2.7",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
